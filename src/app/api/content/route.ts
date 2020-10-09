@@ -1,3 +1,4 @@
+import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 
 const posts = [
@@ -33,6 +34,18 @@ const posts = [
   },
 ];
 
-export function GET() {
-  return NextResponse.json(posts);
+export async function GET() {
+  const session = await getServerSession();
+
+  if (session) {
+    return NextResponse.json(posts);
+  } else {
+    return NextResponse.json(
+      { message: 'Please login' },
+      {
+        status: 401,
+        statusText: 'Unauthorized',
+      }
+    );
+  }
 }
