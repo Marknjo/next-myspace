@@ -2,6 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import MainNav from './MainNav';
+import AuthProvider from './AuthProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,14 +17,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en'>
-      <head>
-        <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
-      </head>
-      <body className={inter.className}>
-        <MainNav />
-        {children}
-      </body>
-    </html>
+    <AuthProvider>
+      <html lang='en'>
+        <head>
+          <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
+        </head>
+        <body className={inter.className}>
+          <MainNav />
+          {children}
+        </body>
+      </html>
+    </AuthProvider>
   );
 }
