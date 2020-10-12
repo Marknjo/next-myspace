@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import MainNav from './MainNav';
 import AuthProvider from './AuthProvider';
+import Link from 'next/link';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,8 +24,40 @@ export default function RootLayout({
           <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
         </head>
         <body className={inter.className}>
-          <MainNav />
-          {children}
+          <div className='container'>
+            <MainNav />
+            {children}
+
+            <footer>
+              <ul>
+                <li>
+                  <Link href={'/about'}>About</Link>
+                </li>{' '}
+                |
+                <li>
+                  <Link
+                    target='_blank'
+                    referrerPolicy='no-referrer'
+                    href={'https://www.youtube.com/@thetalkingdev'}>
+                    YouTube
+                  </Link>
+                </li>{' '}
+                |
+                <li>
+                  <Link href={'/login'}>Source Code</Link>
+                </li>{' '}
+                |
+                <li>
+                  <Link
+                    target='_blank'
+                    referrerPolicy='no-referrer'
+                    href={'https://nextjs.org'}>
+                    NextJS Docs
+                  </Link>
+                </li>
+              </ul>
+            </footer>
+          </div>
         </body>
       </html>
     </AuthProvider>
