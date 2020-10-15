@@ -1,5 +1,5 @@
 import { db } from '@/src/server/db.server';
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { PrismaAdapter } from '@auth/prisma-adapter';
 import { NextAuthOptions } from 'next-auth';
 import NextAuth from 'next-auth/next';
 import GithubProvider from 'next-auth/providers/github';
