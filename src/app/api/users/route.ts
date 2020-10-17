@@ -1,9 +1,10 @@
 import { db } from '@/src/server/db.server';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
+import { authOptions } from '../auth/[...nextauth]/route';
 
 export async function GET(request: Request) {
-  const session = getServerSession();
+  const session = getServerSession(authOptions);
 
   if (!session) {
     return NextResponse.json(

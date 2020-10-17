@@ -10,8 +10,6 @@ interface IProps {
 export default function AuthCheck({ children }: IProps) {
   const { data: session, status } = useSession();
 
-  console.log(session, status);
-
   if (status === 'authenticated') {
     return <>{children}</>;
   } else {
