@@ -38,9 +38,7 @@ const posts = [
 export async function GET() {
   const session = await getServerSession(authOptions);
 
-  if (session) {
-    return NextResponse.json(posts);
-  } else {
+  if (!session) {
     return NextResponse.json(
       { message: 'Please login' },
       {
@@ -49,4 +47,6 @@ export async function GET() {
       }
     );
   }
+
+  return NextResponse.json(posts);
 }
