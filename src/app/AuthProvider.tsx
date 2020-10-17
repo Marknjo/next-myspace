@@ -1,7 +1,7 @@
 'use client';
 
 import { Session } from 'next-auth';
-import { SessionProvider, useSession } from 'next-auth/react';
+import { SessionProvider } from 'next-auth/react';
 import { ReactNode } from 'react';
 
 interface IProps {
