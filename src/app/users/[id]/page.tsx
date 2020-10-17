@@ -19,6 +19,11 @@ interface IProps {
   };
 }
 
+export async function generateMetadata({ params }: IProps) {
+  const user = await getUser(params.id);
+  return { title: `User profile of ${user?.name}` };
+}
+
 export default async function UserProfilePage({ params: { id } }: IProps) {
   const user = await getUser(id);
 
@@ -28,7 +33,7 @@ export default async function UserProfilePage({ params: { id } }: IProps) {
 
   return (
     <section>
-      <h1>{user.name}</h1>
+      <h1>{user?.name}</h1>
       <Image
         src={user.image || '/mememan.webp'}
         width={300}
