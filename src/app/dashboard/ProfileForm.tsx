@@ -1,40 +1,37 @@
+'use client';
+
 import { User } from '@prisma/client';
 import styles from './ProfileForm.module.css';
-import { revalidatePath } from 'next/cache';
-import { db } from '@/src/server/db.server';
+import { useState } from 'react';
 
 interface IProp {
   user: User;
+  onSubmit: (formData: FormData) => Promise<User>;
 }
 
-export default function ProfileForm({ user }: IProp) {
+export default function ProfileForm({ user, onSubmit }: IProp) {
+  const [message, setMessage] = useState<{
+    message: string;
+    alert: '' | 'success' | 'error';
+  }>({
+    message: '',
+    alert: '',
+  });
+
   async function action(formData: FormData) {
-    'use server';
-    const formD = Object.fromEntries(formData) as unknown as User;
-
-    // add validations
-    formD.age = Number(formD.age);
-
-    const data = {
-      name: formD.name,
-      image: formD.image,
-      age: formD.age,
-      bio: formD.bio,
-    };
-
-    // submit data
     try {
-      await db.user.update({
-        where: {
-          id: user.id,
-        },
-        data,
+      await onSubmit(formData);
+      setMessage({
+        message: 'Your profile was successfully updated',
+        alert: 'success',
       });
     } catch (error) {
-      throw new Error('Could not update the form');
+      // @TODO: handle user data appropriately
+      setMessage({
+        message: 'Failed to update user details',
+        alert: 'error',
+      });
     }
-
-    revalidatePath('/dashboard');
   }
 
   return (
@@ -95,6 +92,17 @@ export default function ProfileForm({ user }: IProp) {
             defaultValue={user?.image ?? 0}
           />
         </div>
+
+        {message.message && (
+          <div
+            className={`${styles.formControl} ${styles.alert} ${
+              styles[message.alert]
+            } `}
+            role='alert'
+            onClick={() => setMessage({ message: '', alert: '' })}>
+            <p>{message.message}</p>
+          </div>
+        )}
 
         <div className={styles.formControl}>
           <button className={styles.btn} type='submit'>
