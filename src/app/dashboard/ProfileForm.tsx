@@ -1,16 +1,47 @@
 import { User } from '@prisma/client';
 import styles from './ProfileForm.module.css';
+import { revalidatePath } from 'next/cache';
+import { db } from '@/src/server/db.server';
 
 interface IProp {
   user: User;
 }
 
 export default function ProfileForm({ user }: IProp) {
+  async function action(formData: FormData) {
+    'use server';
+    const formD = Object.fromEntries(formData) as unknown as User;
+
+    // add validations
+    formD.age = Number(formD.age);
+
+    const data = {
+      name: formD.name,
+      image: formD.image,
+      age: formD.age,
+      bio: formD.bio,
+    };
+
+    // submit data
+    try {
+      await db.user.update({
+        where: {
+          id: user.id,
+        },
+        data,
+      });
+    } catch (error) {
+      throw new Error('Could not update the form');
+    }
+
+    revalidatePath('/dashboard');
+  }
+
   return (
     <section className={styles.container}>
       <h2>Edit Your Profile</h2>
 
-      <form action='' className={styles.form}>
+      <form action={action} className={styles.form}>
         <div className={styles.formControl}>
           <label className={styles.label} htmlFor='name'>
             Name
