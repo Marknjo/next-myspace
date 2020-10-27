@@ -1,3 +1,4 @@
+import FollowButton from '@/src/components/followButton/FollowButton';
 import { db } from '@/src/server/db.server';
 import { User } from '@prisma/client';
 import Image from 'next/image';
@@ -43,6 +44,8 @@ export default async function UserProfilePage({ params: { id } }: IProps) {
 
       <h3>Bio</h3>
       <p>{user.bio || 'user does not have a bio text'}</p>
+
+      <FollowButton targetUserId={id} />
     </section>
   );
 }
