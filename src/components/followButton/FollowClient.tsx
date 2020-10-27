@@ -25,7 +25,23 @@ export default function FollowClient({ targetUserId, isFollowing }: IProps) {
     startTransition(() => router.refresh());
   }
 
-  async function followHandler() {}
+  async function followHandler() {
+    setIsFetching(true);
+
+    const res = await fetch('/api/follow', {
+      method: 'POST',
+      body: JSON.stringify({ targetUserId }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    setIsFetching(false);
+
+    startTransition(() => {
+      router.refresh();
+    });
+  }
 
   if (isFollowing) {
     return (
