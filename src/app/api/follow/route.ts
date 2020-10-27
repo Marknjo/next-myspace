@@ -44,4 +44,33 @@ export async function POST(req: Request) {
 }
 
 // remove relationship
-export async function DELETE(req: Request) {}
+export async function DELETE(req: Request) {
+  const sessionUser = await isLoggedIn();
+
+  if ((sessionUser as { message: string })?.message) {
+    return NextResponse.json(sessionUser as { message: string }, {
+      status: 401,
+      statusText: 'Unauthorized',
+    });
+  }
+
+  const user = sessionUser as DefaultSession['user'];
+
+  const email = user!.email!;
+
+  const targetUserId = new URL(req.url).searchParams.get('targetUserId');
+
+  const currentUser = await db.user.findUnique({ where: { email } });
+  const userId = currentUser!.id;
+
+  const record = await db.follows.delete({
+    where: {
+      followerId_followingId: {
+        followerId: userId,
+        followingId: targetUserId!,
+      },
+    },
+  });
+
+  return NextResponse.json(record);
+}
