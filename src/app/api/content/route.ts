@@ -36,17 +36,5 @@ const posts = [
 ];
 
 export async function GET() {
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    return NextResponse.json(
-      { message: 'Please login' },
-      {
-        status: 401,
-        statusText: 'Unauthorized',
-      }
-    );
-  }
-
   return NextResponse.json(posts);
 }
