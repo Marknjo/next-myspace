@@ -6,7 +6,7 @@ export default async function Blog() {
   );
 
   return (
-    <div>
+    <main>
       <h1>Welcome to our Blog</h1>
       <ul>
         {posts.map((post: any) => (
@@ -15,6 +15,6 @@ export default async function Blog() {
           </li>
         ))}
       </ul>
-    </div>
+    </main>
   );
 }
