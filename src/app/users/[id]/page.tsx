@@ -3,6 +3,7 @@ import { db } from '@/src/server/db.server';
 import { User } from '@prisma/client';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
+import styles from './page.module.scss';
 
 async function getUser(id: string): Promise<User | null> {
   const user = await db.user.findFirst({ where: { id } });
@@ -33,19 +34,24 @@ export default async function UserProfilePage({ params: { id } }: IProps) {
   }
 
   return (
-    <section>
-      <h1>{user?.name}</h1>
+    <section className={styles.card}>
+      <h1 className={styles.cardTitle}>{user?.name}</h1>
       <Image
         src={user.image || '/mememan.webp'}
         width={300}
         height={300}
         alt={`Mememan's profile`}
+        className={styles.cardImg}
       />
 
-      <h3>Bio</h3>
-      <p>{user.bio || 'user does not have a bio text'}</p>
+      <div className={styles.cardBody}>
+        <h3 className={styles.cardSubTitle}>Bio</h3>
+        <p className={styles.cardIntro}>
+          {user.bio || 'user does not have a bio text'}
+        </p>
 
-      <FollowButton targetUserId={id} />
+        <FollowButton targetUserId={id} />
+      </div>
     </section>
   );
 }
