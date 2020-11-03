@@ -29,19 +29,23 @@ export default function LikesOptimistic({
     })
   );
 
-  console.log({ type });
-
   return (
     <button
       className={`${className ? className : ''}`}
       onClick={async () => {
         if (type === 'like') {
           addOptimisticLikes(optimisticLikes.likeCount + 1);
+          {
+            optimisticLikes.sending ? '...' : '';
+          }
           likeAction(id);
         }
 
         if (type === 'dislike') {
           addOptimisticLikes(optimisticLikes.likeCount + 1);
+          {
+            optimisticLikes.sending ? '...' : '';
+          }
           dislikeAction(id);
         }
       }}>
