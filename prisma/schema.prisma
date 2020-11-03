@@ -45,6 +45,8 @@ model User {
   image         String?
   age           Int?
   bio           String?
+  likes         Int       @default(0)
+  dislikes      Int       @default(0)
   accounts      Account[]
   following     Follows[] @relation("follower")
   followedBy    Follows[] @relation("following")
