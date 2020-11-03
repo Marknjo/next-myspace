@@ -36,10 +36,18 @@
   padding: 0.8rem 1rem;
   background-color: rgb(223, 223, 238);
   color: rgb(29, 29, 119);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
   &.skeleton {
     margin-bottom: 0.8rem;
     min-height: 28px;
     border-radius: 4px;
+  }
+
+  & > span:last-of-type {
+    font-size: 1.1rem;
+    color: rgb(116, 116, 153);
   }
 }
 
@@ -69,6 +77,37 @@
     min-height: 40px;
     border-radius: 4px;
     width: 100px;
+  }
+}
+
+.footer {
+  display: flex;
+}
+
+.icons {
+  margin-left: auto;
+  display: flex;
+  column-gap: 0.2rem;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+.iconHeart {
+  color: tomato;
+}
+
+.likes {
+  border: none;
+  background-color: transparent;
+  border-radius: 4px;
+  position: relative;
+
+  &.skeleton {
+    min-height: 24px;
+    width: 24px;
   }
 }
 
